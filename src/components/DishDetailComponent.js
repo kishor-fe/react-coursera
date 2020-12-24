@@ -20,6 +20,33 @@ class DishDetail extends Component{
             );
     
         }
+
+        renderComments(selectedDish) {
+            if (selectedDish.comments.length === 0)
+            {
+                console.log('Empty Comment')
+                return (<div><h4>Comments</h4></div>);
+            }
+               
+            const comments = selectedDish.comments.map((comment) => {
+                const date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)));
+                return (
+                    <div key={comment.id}>
+                    <li>{comment.comment}</li>
+                    <li>-- {comment.author}, {date}</li>
+                    </div>
+                );
+            });
+    
+            return (
+            <div>
+            <h4>Comments</h4>
+            <ul className="list-unstyled">
+                {comments}
+            </ul>
+            </div>
+            )
+        }
     
         render() {
             const selectedDish = this.props.selectedDish;
@@ -28,6 +55,9 @@ class DishDetail extends Component{
                     <div className="row">
                         <div className="col-12 col-md-5 m-1">
                             {this.renderDish(selectedDish)}
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            {this.renderComments(selectedDish)}
                         </div>
                     </div>
                 );
