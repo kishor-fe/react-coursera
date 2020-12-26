@@ -1,27 +1,20 @@
-/* eslint-disable no-useless-constructor */
-import React, {Component} from 'react';
+import React from 'react';
 import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
-class DishDetail extends Component{
-
-    constructor(props){
-        super(props);
-        }
-
-        renderDish(selectedDish) {
+function RenderDish({dish}) {
             return (
                 <Card>
-                    <CardImg top src={selectedDish.image} alt={selectedDish.name}/>
+                    <CardImg top src={dish.image} alt={dish.name}/>
                     <CardBody>
-                        <CardTitle>{selectedDish.name}</CardTitle>
-                        <CardText>{selectedDish.description}</CardText>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
             );
     
         }
 
-        renderComments(selectedDish) {
+function RenderComments({selectedDish}) {
             if (selectedDish.comments.length === 0)
             {
                 console.log('Empty Comment')
@@ -46,20 +39,21 @@ class DishDetail extends Component{
             </ul>
             </div>
             )
-        }
+}
     
-        render() {
-            const selectedDish = this.props.dish;
+        const DishDetail = (props) =>    {
+            console.log('Render invoked');
+            const selectedDish = props.dish;
             console.log('Rendering :'+selectedDish)
             if (selectedDish != null) {
                 return (
                     <div className="container">
                         <div className="row">
                         <div className="col-12 col-md-5 m-1">
-                            {this.renderDish(selectedDish)}
+                            <RenderDish dish = {selectedDish}/>
                         </div>
                         <div className="col-12 col-md-5 m-1">
-                            {this.renderComments(selectedDish)}
+                            <RenderComments selectedDish = { selectedDish} />
                         </div>
                         </div>
                     </div>
@@ -71,6 +65,6 @@ class DishDetail extends Component{
             }
     
         }
-    }
+    
 
 export default DishDetail;
